@@ -93,9 +93,9 @@ def contar_frecuencia_tokens(oracion: str, texto: str) -> int:
 @st.cache_data
 def cargar_csv(DATA_URL):
     # Autorización (privilegios limitados)
-    token = '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'
-    headers = {'Authorization': f'token {token}'}
-    response = requests.get(DATA_URL, headers=headers)
+    #token = 
+    #headers = {'Authorization': f'token {token}'}
+    response = requests.get(DATA_URL)  #, headers=headers)
     if response.status_code == 200:
         csv_data = response.content.decode('utf-8')
         data = pd.read_csv(StringIO(csv_data))
