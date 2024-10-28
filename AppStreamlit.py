@@ -31,6 +31,7 @@ def sim_coseno(vec1: np.ndarray, vec2: np.ndarray) -> float:
 
 # Vectorizador Bag of Words
 def BoW_vec_Streamlit(docs: list) -> tuple:
+    
     doc_tokens = [limpiar_tokenizar(doc) for doc in docs]  # Limpiar y obtener tokens
     all_doc_tokens = sum(doc_tokens, [])  # Juntar tokens totales
     lexico = sorted(set(all_doc_tokens))  # obtener léxico
@@ -148,4 +149,8 @@ def main():
 
 
 if __name__ == '__main__':
-      main()
+    try:
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        nltk.download('stopwords')
+    main()
