@@ -10,9 +10,6 @@ from nltk.tokenize import TreebankWordTokenizer
 import nltk
 
 
-def contar_frecuencia(palabra, token) -> int:
-            return token.split().count(palabra.lower())
-
 
 def limpiar_tokenizar(doc, tokenizer= TreebankWordTokenizer()):
         stop_words = set(nltk.corpus.stopwords.words('spanish'))
@@ -80,8 +77,9 @@ def contar_frecuencia_tokens(oracion: str, texto: str) -> int:
     # Tokenizar la oración y el texto preprocesado
     tokenizer = TreebankWordTokenizer()
     tokens_oracion = tokenizer.tokenize(oracion.lower())
-    tokens_texto = tokenizer.tokenize(texto)
-
+    tokens_texto = tokenizer.tokenize(texto.lower())
+    tokens_texto = [token.strip('”') for token in tokens_texto]
+    
     token_counts = Counter(tokens_texto)  # Contar frecuencias de tokens en texto
     # Calcular la frecuencia acumulada de tokens en oración
     frecuencia_total = sum(token_counts[token] for token in tokens_oracion)
@@ -122,7 +120,7 @@ def main():
     # Proceso para palabras
     if buscar_palabra:
         # Aplicar la búsqueda en la columna "Cuerpo"
-        datos_cargados['Frecuencia'] = datos_cargados['Cuerpo'].apply(lambda txt: contar_frecuencia(buscar_palabra,txt))
+        datos_cargados['Frecuencia'] = datos_cargados['Cuerpo'].apply(lambda txt: contar_frecuencia_tokens(buscar_palabra,txt))
         
         # Filtrar documentos
         resultados = datos_cargados[datos_cargados['Frecuencia'] > 0]
